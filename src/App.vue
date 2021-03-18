@@ -6,6 +6,7 @@
     <modal
       title="confirm"
       :visible="visible"
+      placeholder="点击进行输入"
       @close="toggleVisible"
       @confirm="handleConfirm"
       @after-close="handleAfterClose"
@@ -19,23 +20,17 @@
 
 <script>
 import Modal from './components/modal.vue';
-import open from './components/modal.js';
+import * as ModalUtils from './utils/modal-utils';
 
 export default {
   name: 'App',
   components: { Modal },
   data() {
     return {
-      /**
-       * visible of modal
-       */
       visible: false,
     };
   },
   methods: {
-    /**
-     * toggle modal's visible
-     */
     toggleVisible() {
       this.visible = !this.visible;
     },
@@ -47,9 +42,8 @@ export default {
       console.log('modal is closed');
     },
     async openModal() {
-      open({ title: '命令式弹窗' })
+      ModalUtils.open({ title: '命令式弹窗', placeholder: '请输入内容' })
         .then((value) => {
-          console.log(this);
           console.log('弹窗点击确认后被关闭', value);
         })
         .catch(() => {

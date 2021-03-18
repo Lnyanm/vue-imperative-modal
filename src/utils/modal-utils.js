@@ -1,9 +1,22 @@
 import Vue from 'vue';
-import Modal from './modal.vue';
+import Modal from '../components/modal.vue';
 
 const ModalConstructor = Vue.extend(Modal);
 
-export default function open(options = {}, parent) {
+/**
+ * @typedef {Object} OpenOptions open函数的配置类型
+ * @property {string} [title] - 标题
+ * @property {string} [placeholder] - 占位展示文本
+ */
+
+/**
+ * 命令式打开弹窗
+ *
+ * @param {OpenOptions} [options] 配置
+ * @param {HTMLElement} [parent] 挂载的父节点
+ * @returns {Promise<string>} 弹窗内输入的文本
+ */
+export function open(options = {}, parent) {
   return new Promise((resolve, reject) => {
     options.visible = false;
 

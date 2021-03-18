@@ -1,15 +1,20 @@
 <template>
   <div>
     <transition name="fade">
-      <div class="mask" v-if="visible" @click="handleMaskClick"></div>
+      <div v-if="visible" class="mask" @click="handleMaskClick"></div>
     </transition>
 
     <transition name="zoom" @after-leave="handleAfterClose">
-      <div class="wrapper" v-if="visible">
+      <div v-if="visible" class="wrapper">
         <div class="modal">
           <div class="title">{{ title }}</div>
           <div class="content modal-content">
-            <input v-model="value" class="text-input" />
+            <input
+              v-model="value"
+              class="text-input"
+              :placeholder="placeholder"
+              @keydown.enter="handleConfirm"
+            />
           </div>
           <div class="action-wrapper">
             <div @click="handleConfirm">confirm</div>
@@ -31,6 +36,7 @@ export default {
     visible: { type: Boolean, default: false },
     title: { type: String, default: 'modal' },
     maskCloseable: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'input something ...' },
   },
   emits: ['close', 'confirm', 'after-close'],
   data() {
@@ -136,7 +142,14 @@ export default {
   align-items: center;
 }
 .modal-content > .text-input {
-  width: 80%;
+  width: 90%;
+  border: none;
+  border-bottom: 1px solid var(--color--divider);
+  outline: none;
+  transition: all 300ms;
+}
+.modal-content > .text-input:focus {
+  border-bottom-color: hotpink;
 }
 
 .modal > .action-wrapper {
